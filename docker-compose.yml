@@ -1,0 +1,31 @@
+services:
+  tracker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: tracker
+    env_file: .env
+    ports:
+      - "8080:8080" # změň, pokud chceš jiný host port
+    volumes:
+      - data:/app/data # perzistence SQLite
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+    # Pokud poběží za reverzní proxy, port mapování můžeš klidně odstranit
+    # networks:
+    #   - web
+    # labels:
+    #   - "traefik.enable=true"
+    #   - "traefik.http.routers.tracker.rule=Host(`tracker.tvoje-domena.cz`)"
+    #   - "traefik.http.services.tracker.loadbalancer.server.port=8080"
+
+volumes:
+  data:
+    driver: local
+# networks:
+#   web:
+#     external: true
