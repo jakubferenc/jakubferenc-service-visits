@@ -1,48 +1,44 @@
-import Database from "better-sqlite3";
-import { config } from "./config.js";
-import fs from "fs";
-import path from "path";
+// src/db.ts
+import { Pool } from "pg";
 
-const dir = path.dirname(config.dbPath);
-if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-
-export const db = new Database(config.dbPath, { fileMustExist: false });
-
-db.pragma("journal_mode = WAL");
-db.pragma("synchronous = NORMAL");
-db.pragma("foreign_keys = ON");
-
-db.exec(`
-CREATE TABLE IF NOT EXISTS visits (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  ip TEXT NOT NULL,
-  visited_at TEXT NOT NULL,       -- ISO string
-  referrer TEXT,
-  path TEXT NOT NULL,
-  article_id TEXT,
-  article_title TEXT,
-  user_agent TEXT,
-  created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now'))
-);
-CREATE INDEX IF NOT EXISTS idx_visits_visited_at ON visits(visited_at);
-CREATE INDEX IF NOT EXISTS idx_visits_path ON visits(path);
-`);
-
-export const insertVisit = db.prepare(`
-INSERT INTO visits (ip, visited_at, referrer, path, article_id, article_title, user_agent)
-VALUES (@ip, @visitedAt, @referrer, @path, @articleId, @articleTitle, @userAgent)
-`);
-
-export function addVisit(row: {
-  ip: string;
-  visitedAt: string;
-  referrer: string | null;
-  path: string;
-  articleId: string | null;
-  articleTitle: string | null;
-  userAgent: string | null;
-}) {
-  insertVisit.run(row);
+const connectionString = process.env.DATABASE_URL;
+if (!connectionString) {
+  throw new Error("DATABASE_URL env var is required");
 }
 
-export const selectCount = db.prepare(`SELECT COUNT(*) as c FROM visits`);
+export const pool = new Pool({
+  connectionString,
+});
+
+// Call once at startup to ensure table exists
+export async function initDb() {
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS visits (
+      id SERIAL PRIMARY KEY,
+      post_id TEXT NOT NULL,
+      path TEXT NOT NULL,
+      post_title TEXT NOT NULL,
+      referrer TEXT,
+      user_agent TEXT,
+      ip TEXT,
+      created_at TIMESTAMPTZ DEFAULT NOW()
+    );
+  `);
+}
+
+export async function insertVisit(
+  postId: string,
+  path: string,
+  postTitle: string,
+  referrer: string | null,
+  userAgent: string | null,
+  ip: string | null,
+) {
+  await pool.query(
+    `
+      INSERT INTO visits (post_id, path, post_title, referrer, user_agent, ip)
+      VALUES ($1, $2, $3, $4, $5, $6)
+    `,
+    [postId, path, postTitle, referrer, userAgent, ip],
+  );
+}

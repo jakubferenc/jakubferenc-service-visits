@@ -1,13 +1,19 @@
 {
   "compilerOptions": {
-    "target": "ES2022",
-    "module": "ES2022",
-    "moduleResolution": "Bundler",
-    "outDir": "dist",
+    "target": "ES2020",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "rootDir": "src",
+    "outDir": "dist",
+    "esModuleInterop": true,
     "strict": true,
-    "noUncheckedIndexedAccess": true,
+    "resolveJsonModule": true,
     "skipLibCheck": true
   },
-  "include": ["src"]
+  "include": ["src"], // 👈 only your app code
+  "exclude": [
+    "node_modules",
+    "dist",
+    "eslint.config.ts" // 👈 do NOT compile eslint config
+  ]
 }

@@ -1,32 +1,18 @@
-# Build stage
-FROM node:22-bookworm-slim AS build
+FROM node:20-alpine
+
 WORKDIR /app
-COPY package.json package-lock.json* ./
-RUN npm ci --ignore-scripts
+ENV NODE_ENV=production
+
+RUN corepack enable
+
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install --frozen-lockfile
+
 COPY tsconfig.json ./
 COPY src ./src
-RUN npm run build
 
-# Runtime stage (menší image)
-FROM node:22-bookworm-slim
-WORKDIR /app
-
-# non-root user
-RUN useradd -m appuser
-USER appuser
-
-# adresář pro DB
-RUN mkdir -p /app/data
-
-COPY --chown=appuser:appuser package.json package-lock.json* ./
-RUN npm ci --omit=dev --ignore-scripts
-
-COPY --from=build --chown=appuser:appuser /app/dist ./dist
-
-ENV PORT=8080
-ENV DB_PATH=/app/data/visits.db
-ENV CORS_ORIGIN=*
-# ENV API_KEY=some-long-secret
+RUN pnpm exec tsc
 
 EXPOSE 8080
+
 CMD ["node", "dist/server.js"]

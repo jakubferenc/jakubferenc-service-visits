@@ -1,75 +1,84 @@
-import { createServer } from "http";
-import { config } from "./config.js";
-import { addVisit, selectCount } from "./db.js";
-import { readJson, send, validatePayload, setCors, isoNow } from "./utils.js";
-import { URL } from "url";
+// src/server.ts
+import "dotenv/config";
+import express, { type Request, type Response } from "express";
+import { initDb, insertVisit } from "./db.js";
+import type { VisitPayload } from "./types.js";
+const app = express();
 
-const server = createServer(async (req, res) => {
-  // CORS
-  setCors(res, config.corsOrigin);
+app.disable("x-powered-by");
+app.set("trust proxy", true);
 
-  // Preflight
-  if (req.method === "OPTIONS") {
-    res.statusCode = 204;
-    return res.end();
-  }
+app.use(
+  express.json({
+    limit: "10kb",
+  }),
+);
 
-  // Healthcheck
-  if (req.method === "GET" && req.url?.startsWith("/health")) {
-    const { c } = selectCount.get() as { c: number };
-    return send(res, 200, { status: "ok", time: isoNow(), rows: c });
-  }
-
-  // Simple root
-  if (req.method === "GET" && req.url === "/") {
-    return send(res, 200, { name: "node-ts-sqlite-tracker", time: isoNow() });
-  }
-
-  // Tracking endpoint
-  if (req.method === "POST" && req.url?.startsWith("/track")) {
-    // Volitelný API key
-    if (config.apiKey) {
-      const key = req.headers["x-api-key"];
-      if (typeof key !== "string" || key !== config.apiKey) {
-        return send(res, 401, { error: "Unauthorized" });
-      }
-    }
-
-    try {
-      const payload = await readJson<any>(req, 32 * 1024);
-      // Pokud FE nepošle userAgent, můžeme si doplnit z hlavičky
-      if (!payload.userAgent && typeof req.headers["user-agent"] === "string") {
-        payload.userAgent = req.headers["user-agent"];
-      }
-      // Pokud FE nepošle ip, lze případně vzít z X-Forwarded-For / socketu (ale ty jsi chtěl posílat ip z FE)
-      if (!payload.ip) {
-        const xff = (req.headers["x-forwarded-for"] as string | undefined)
-          ?.split(",")[0]
-          ?.trim();
-        payload.ip = xff || (req.socket.remoteAddress ?? "");
-      }
-
-      const v = validatePayload(payload);
-      if (!v.ok)
-        return send(res, 400, {
-          error: "Validation failed",
-          details: v.errors,
-        });
-
-      addVisit(v.value);
-      // minimalistická odpověď
-      return send(res, 204);
-    } catch (err: any) {
-      const status = err?.status ?? 500;
-      return send(res, status, { error: err?.message ?? "Internal error" });
-    }
-  }
-
-  // 404
-  send(res, 404, { error: "Not found" });
+app.get("/", (_req: Request, res: Response) => {
+  res.json({ ok: true });
 });
 
-server.listen(config.port, () => {
-  // eslint-disable-next-line no-console
-  console.log(`Server listening on :${config.port}`);
+app.get("/health", (_req: Request, res: Response) => {
+  res.json({ ok: true });
+});
+
+app.post(
+  "/api/visit",
+  async (req: Request<{}, {}, VisitPayload>, res: Response) => {
+    const { postId, path, postTitle, referrer, userAgent } = req.body ?? {};
+
+    if (
+      typeof postId !== "string" ||
+      postId.length === 0 ||
+      typeof path !== "string" ||
+      path.length === 0 ||
+      typeof postTitle !== "string" ||
+      postTitle.length === 0
+    ) {
+      return res.status(400).json({
+        error: "postId, path and postTitle are required non-empty strings",
+      });
+    }
+
+    const resolvedReferrer =
+      typeof referrer === "string" && referrer.length > 0
+        ? referrer
+        : req.get("referer") || null;
+
+    const resolvedUserAgent =
+      typeof userAgent === "string" && userAgent.length > 0
+        ? userAgent
+        : req.get("user-agent") || null;
+
+    const ip = req.ip || null;
+
+    try {
+      await insertVisit(
+        postId,
+        path,
+        postTitle,
+        resolvedReferrer,
+        resolvedUserAgent,
+        ip,
+      );
+      return res.sendStatus(204);
+    } catch (err) {
+      console.error("Error inserting visit", err);
+      return res.status(500).json({ error: "Internal server error" });
+    }
+  },
+);
+
+const PORT = Number(process.env.PORT) || 8080;
+
+async function start() {
+  await initDb();
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}
+
+start().catch((err) => {
+  console.error("Failed to start server", err);
+  process.exit(1);
 });
