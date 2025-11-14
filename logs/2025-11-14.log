@@ -1,0 +1,85 @@
+[2025-11-14T00:42:45.750Z] POST /api/visit 204 12ms
+[2025-11-14T00:42:49.068Z] POST /api/visit 204 4ms
+[2025-11-14T00:43:55.684Z] POST /api/visit 204 9ms
+[2025-11-14T00:44:37.407Z] POST /api/visit 204 11ms
+[2025-11-14T00:45:47.630Z] POST /api/visit 201 23ms
+[2025-11-14T00:45:50.895Z] POST /api/visit 204 3ms
+[2025-11-14T00:49:49.180Z] POST /api/stats/visit 404 1ms
+[2025-11-14T00:49:49.195Z] POST /api/stats/visit 404 1ms
+[2025-11-14T00:49:53.113Z] POST /api/stats/visit 404 0ms
+[2025-11-14T00:52:44.503Z] GET /api/stats/915 200 52ms
+[2025-11-14T00:52:44.516Z] Inserted visit for postId=915 postTitle=Michel Foucault a otázka konceptu „nebezpečného jedince“ v psychiatrii 19. století from IP=::ffff:192.168.65.1
+[2025-11-14T00:52:44.518Z] POST /api/stats/visit 201 8ms
+[2025-11-14T00:52:44.536Z] GET /api/stats/915 200 41ms
+[2025-11-14T00:52:58.571Z] GET /api/stats/915 200 36ms
+[2025-11-14T00:52:58.578Z] GET /api/stats/915 200 2ms
+[2025-11-14T00:52:58.579Z] POST /api/stats/visit 204 2ms
+[2025-11-14T00:53:54.346Z] GET /api/stats/915 304 49ms
+[2025-11-14T00:53:54.346Z] Inserted visit for postId=915 postTitle=Michel Foucault a otázka konceptu „nebezpečného jedince“ v psychiatrii 19. století from IP=::ffff:192.168.65.1
+[2025-11-14T00:53:54.347Z] POST /api/stats/visit 201 44ms
+[2025-11-14T00:54:05.394Z] GET /api/stats/915 200 43ms
+[2025-11-14T00:54:05.395Z] POST /api/stats/visit 204 39ms
+[2025-11-14T00:54:43.661Z] GET /api/stats/915 200 39ms
+[2025-11-14T00:54:43.664Z] POST /api/stats/visit 204 33ms
+[2025-11-14T00:54:55.112Z] GET /api/stats/915 304 59ms
+[2025-11-14T00:54:55.114Z] Inserted visit for postId=915 postTitle=Michel Foucault a otázka konceptu „nebezpečného jedince“ v psychiatrii 19. století from IP=::ffff:192.168.65.1
+[2025-11-14T00:54:55.115Z] POST /api/stats/visit 201 51ms
+[2025-11-14T00:55:03.741Z] GET /api/stats/915 200 3ms
+[2025-11-14T00:55:03.746Z] POST /api/stats/visit 204 1ms
+[2025-11-14T00:55:12.831Z] GET /api/stats/915 304 4ms
+[2025-11-14T00:55:12.834Z] POST /api/stats/visit 204 1ms
+[2025-11-14T00:56:30.252Z] GET /api/stats/915 304 41ms
+[2025-11-14T00:56:30.254Z] Inserted visit for postId=915 postTitle=Michel Foucault a otázka konceptu „nebezpečného jedince“ v psychiatrii 19. století from IP=::ffff:192.168.65.1
+[2025-11-14T00:56:30.255Z] POST /api/stats/visit 201 38ms
+[2025-11-14T00:56:40.447Z] POST /api/stats/visit 204 38ms
+[2025-11-14T00:56:40.446Z] GET /api/stats/915 200 47ms
+[2025-11-14T00:57:10.651Z] POST /api/stats/visit 204 37ms
+[2025-11-14T00:57:10.653Z] GET /api/stats/915 304 43ms
+[2025-11-14T00:57:27.997Z] GET /api/stats/915 304 44ms
+[2025-11-14T00:57:28.000Z] POST /api/stats/visit 204 36ms
+[2025-11-14T00:57:47.782Z] GET /api/stats/934 200 34ms
+[2025-11-14T00:57:47.783Z] Inserted visit for postId=934 postTitle=Jsou duševní poruchy reálné? Thomas Szasz si myslí, že nikoli from IP=::ffff:192.168.65.1
+[2025-11-14T00:57:47.784Z] POST /api/stats/visit 201 24ms
+[2025-11-14T00:58:04.698Z] GET /api/stats/934 200 33ms
+[2025-11-14T00:58:04.698Z] POST /api/stats/visit 204 30ms
+[2025-11-14T00:58:12.687Z] GET /api/stats/934 304 3ms
+[2025-11-14T00:58:12.690Z] POST /api/stats/visit 204 1ms
+[2025-11-14T00:58:30.633Z] GET /api/stats/934 304 43ms
+[2025-11-14T00:58:30.634Z] POST /api/stats/visit 204 38ms
+[2025-11-14T00:59:03.459Z] GET /api/stats/934 304 43ms
+[2025-11-14T00:59:03.460Z] Inserted visit for postId=934 postTitle=Jsou duševní poruchy reálné? Thomas Szasz si myslí, že nikoli from IP=::ffff:192.168.65.1
+[2025-11-14T00:59:03.461Z] POST /api/stats/visit 201 33ms
+[2025-11-14T00:59:09.602Z] GET /api/stats/934 200 2ms
+[2025-11-14T00:59:09.605Z] POST /api/stats/visit 204 1ms
+[2025-11-14T00:59:23.357Z] POST /api/stats/visit 204 37ms
+[2025-11-14T00:59:23.356Z] GET /api/stats/934 304 44ms
+[2025-11-14T00:59:31.250Z] GET /api/stats/934 304 3ms
+[2025-11-14T00:59:31.252Z] POST /api/stats/visit 204 0ms
+[2025-11-14T00:59:42.158Z] GET /api/stats/934 304 43ms
+[2025-11-14T00:59:42.158Z] POST /api/stats/visit 204 37ms
+[2025-11-14T00:59:50.250Z] GET /api/stats/934 304 2ms
+[2025-11-14T00:59:50.252Z] POST /api/stats/visit 204 0ms
+[2025-11-14T00:59:54.075Z] GET /api/stats/934 304 5ms
+[2025-11-14T00:59:54.083Z] POST /api/stats/visit 204 11ms
+[2025-11-14T01:00:14.196Z] GET /api/stats/934 304 36ms
+[2025-11-14T01:00:14.200Z] Inserted visit for postId=934 postTitle=Jsou duševní poruchy reálné? Thomas Szasz si myslí, že nikoli from IP=::ffff:192.168.65.1
+[2025-11-14T01:00:14.200Z] POST /api/stats/visit 201 36ms
+[2025-11-14T01:00:31.220Z] GET /api/stats/934 200 44ms
+[2025-11-14T01:00:31.220Z] POST /api/stats/visit 204 36ms
+[2025-11-14T01:00:42.760Z] GET /api/stats/934 304 38ms
+[2025-11-14T01:00:42.761Z] POST /api/stats/visit 204 32ms
+[2025-11-14T01:00:59.219Z] POST /api/stats/visit 204 36ms
+[2025-11-14T01:00:59.219Z] GET /api/stats/934 304 42ms
+[2025-11-14T01:01:32.342Z] GET /api/stats/934 304 43ms
+[2025-11-14T01:01:32.343Z] Inserted visit for postId=934 postTitle=Jsou duševní poruchy reálné? Thomas Szasz si myslí, že nikoli from IP=::ffff:192.168.65.1
+[2025-11-14T01:01:32.343Z] POST /api/stats/visit 201 35ms
+[2025-11-14T01:01:37.573Z] GET /api/stats/934 200 5ms
+[2025-11-14T01:01:37.576Z] POST /api/stats/visit 204 1ms
+[2025-11-14T01:01:47.733Z] POST /api/stats/visit 204 34ms
+[2025-11-14T01:01:47.734Z] GET /api/stats/934 304 40ms
+[2025-11-14T01:01:53.318Z] GET /api/stats/934 304 4ms
+[2025-11-14T01:01:53.321Z] POST /api/stats/visit 204 1ms
+[2025-11-14T01:01:57.480Z] GET /api/stats/934 304 1ms
+[2025-11-14T01:01:57.481Z] POST /api/stats/visit 204 2ms
+[2025-11-14T01:02:03.895Z] GET /api/stats/934 304 3ms
+[2025-11-14T01:02:03.897Z] POST /api/stats/visit 204 1ms

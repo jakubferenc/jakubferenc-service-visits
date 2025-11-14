@@ -1,16 +1,9 @@
-// src/db.ts
 import { Pool } from "pg";
 
 const connectionString = process.env.DATABASE_URL;
-if (!connectionString) {
-  throw new Error("DATABASE_URL env var is required");
-}
 
-export const pool = new Pool({
-  connectionString,
-});
+export const pool = new Pool({ connectionString });
 
-// Call once at startup to ensure table exists
 export async function initDb() {
   await pool.query(`
     CREATE TABLE IF NOT EXISTS visits (
@@ -24,6 +17,27 @@ export async function initDb() {
       created_at TIMESTAMPTZ DEFAULT NOW()
     );
   `);
+}
+
+export async function hasRecentVisit(
+  postId: string,
+  ip: string | null,
+): Promise<boolean> {
+  if (!ip) return false;
+
+  const result = await pool.query(
+    `
+      SELECT 1
+      FROM visits
+      WHERE post_id = $1
+        AND ip = $2
+        AND created_at > NOW() - INTERVAL '1 minute'
+      LIMIT 1
+    `,
+    [postId, ip],
+  );
+
+  return (result?.rowCount || 0) > 0;
 }
 
 export async function insertVisit(
