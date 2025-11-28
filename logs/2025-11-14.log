@@ -83,3 +83,6 @@
 [2025-11-14T01:01:57.481Z] POST /api/stats/visit 204 2ms
 [2025-11-14T01:02:03.895Z] GET /api/stats/934 304 3ms
 [2025-11-14T01:02:03.897Z] POST /api/stats/visit 204 1ms
+[2025-11-14T09:53:30.269Z] GET /api/stats/543 200 40ms
+[2025-11-14T09:53:30.270Z] Inserted visit for postId=543 postTitle=Jak Facebook a jeho Instagram vydělává na psychickém (ne)zdraví dospívajících dívek from IP=::ffff:192.168.65.1
+[2025-11-14T09:53:30.270Z] POST /api/stats/visit 201 30ms

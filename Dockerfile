@@ -13,6 +13,6 @@ COPY src ./src
 
 RUN pnpm exec tsc
 
-EXPOSE 8080
+EXPOSE 8001
 
 CMD ["node", "dist/server.js"]

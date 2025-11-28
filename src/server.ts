@@ -56,7 +56,7 @@ app.get("/", (_req: Request, res: Response) => {
   res.json({ ok: true });
 });
 
-app.get("/health", (_req: Request, res: Response) => {
+app.get("/api/health", (_req: Request, res: Response) => {
   res.json({ ok: true });
 });
 
@@ -97,7 +97,8 @@ app.post(
     const ip = req.ip || null;
 
     // 👇 do NOT count a new visit if same IP hit same post in last 1 minute
-    if (await hasRecentVisit(postId, ip)) {
+    const hasRecentVisitResult = await hasRecentVisit(postId, ip);
+    if (hasRecentVisitResult) {
       return res.sendStatus(204); // silently accept but don't insert
     }
 
@@ -171,11 +172,12 @@ app.get("/api/stats/:postId", async (req: Request, res: Response) => {
   }
 });
 
-const PORT = Number(process.env.PORT) || 8080;
+const PORT = Number(process.env.PORT) || 8001;
+const HOST = process.env.HOST || "";
 
 async function start() {
   await initDb();
-  app.listen(PORT, () => {
+  app.listen(PORT, HOST, () => {
     console.log(`Server running on port ${PORT}`);
   });
 }

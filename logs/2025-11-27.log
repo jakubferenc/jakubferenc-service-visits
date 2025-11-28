@@ -1,0 +1,25 @@
+[2025-11-27T12:48:43.037Z] GET /api/health 404 3ms
+[2025-11-27T12:48:44.924Z] GET /api/health 404 0ms
+[2025-11-27T12:48:47.963Z] GET /api/ 404 2ms
+[2025-11-27T12:48:51.584Z] GET /api/healthceck 404 2ms
+[2025-11-27T12:48:55.085Z] GET /api/healthcheck 404 3ms
+[2025-11-27T12:49:42.834Z] GET /api/healthcheck 404 1ms
+[2025-11-27T12:49:47.099Z] GET /api/health 404 2ms
+[2025-11-27T12:49:48.010Z] GET /api/health 404 1ms
+[2025-11-27T12:57:57.420Z] GET /api/health 200 3ms
+[2025-11-27T12:58:25.002Z] GET /api/stats/934 200 48ms
+[2025-11-27T12:58:25.004Z] Inserted visit for postId=934 postTitle=Jsou duševní poruchy reálné? Thomas Szasz si myslí, že nikoli from IP=::ffff:192.168.65.1
+[2025-11-27T12:58:25.004Z] POST /api/stats/visit 201 20ms
+[2025-11-27T12:58:30.675Z] GET /api/stats/934 200 5ms
+[2025-11-27T12:58:30.677Z] POST /api/stats/visit 204 1ms
+[2025-11-27T12:58:32.887Z] GET /api/stats/934 304 4ms
+[2025-11-27T12:58:32.887Z] POST /api/stats/visit 204 2ms
+[2025-11-27T12:59:47.426Z] Inserted visit for postId=934 postTitle=Jsou duševní poruchy reálné? Thomas Szasz si myslí, že nikoli from IP=::ffff:192.168.65.1
+[2025-11-27T12:59:47.427Z] POST /api/stats/visit 201 41ms
+[2025-11-27T12:59:47.428Z] GET /api/stats/934 304 45ms
+[2025-11-27T12:59:58.943Z] POST /api/stats/visit 204 35ms
+[2025-11-27T12:59:58.945Z] GET /api/stats/934 200 40ms
+[2025-11-27T13:00:15.366Z] GET /api/stats/934 304 39ms
+[2025-11-27T13:00:15.372Z] POST /api/stats/visit 204 38ms
+[2025-11-27T13:09:02.975Z] GET / 200 3ms
+[2025-11-27T13:09:03.015Z] GET /favicon.ico 404 2ms

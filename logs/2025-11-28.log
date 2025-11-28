@@ -1,0 +1,9 @@
+[2025-11-28T08:52:00.009Z] GET /api/stats/934 304 46ms
+[2025-11-28T08:52:00.013Z] Inserted visit for postId=934 postTitle=Jsou duševní poruchy reálné? Thomas Szasz si myslí, že nikoli from IP=::ffff:192.168.65.1
+[2025-11-28T08:52:00.014Z] POST /api/stats/visit 201 44ms
+[2025-11-28T08:52:08.929Z] GET /api/stats/934 200 4ms
+[2025-11-28T08:52:08.932Z] POST /api/stats/visit 204 1ms
+[2025-11-28T19:49:52.546Z] GET /health 404 4ms
+[2025-11-28T19:49:58.989Z] GET /api/health 200 3ms
+[2025-11-28T19:50:03.672Z] GET /api/health 304 2ms
+[2025-11-28T19:50:03.803Z] GET / 200 5ms
