@@ -2,7 +2,7 @@
 import "dotenv/config";
 import express, { type Request, type Response } from "express";
 import { initDb, insertVisit, hasRecentVisit, pool } from "./db.js";
-import type { VisitPayload } from "./types.js";
+import type { VisitPayload } from "./types/index.js";
 import cors from "cors";
 import { logError, logToFile } from "./logger.js";
 
