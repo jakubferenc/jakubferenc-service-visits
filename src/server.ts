@@ -27,6 +27,8 @@ app.use(
 app.use(
   cors({
     origin: process.env.CORS_ORIGIN,
+    methods: ["GET", "POST", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "X-API-KEY"],
   }),
 );
 
@@ -173,11 +175,10 @@ app.get("/api/stats/:postId", async (req: Request, res: Response) => {
 });
 
 const PORT = Number(process.env.PORT) || 8001;
-const HOST = process.env.HOST || "";
 
 async function start() {
   await initDb();
-  app.listen(PORT, HOST, () => {
+  app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
   });
 }

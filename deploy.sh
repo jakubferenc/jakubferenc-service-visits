@@ -20,7 +20,7 @@ fi
 
 # --- Konfigurace ---
 SRC_DIR="$SCRIPT_DIR"  # přeneseme celý projekt relativně ke skriptu
-DEST_PATH="/www/hosting/jakubferenc.cz/jakubferenc-api-service"
+DEST_PATH="/www/hosting/jakubferenc.cz/api"
 
 # --- Kontroly ---
 if ! command -v sshpass >/dev/null 2>&1; then
@@ -78,7 +78,7 @@ fi
 # --- Start docker-compose na serveru ---
 if [ -f "$SCRIPT_DIR/docker-compose.yml" ]; then
   echo "🚀 Spouštím / restartuji služby pomocí docker-compose na serveru..."
-  sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no "$SSH_USER@$SSH_HOST" "cd '$DEST_PATH' && docker compose up -d --build"
+  sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no "$SSH_USER@$SSH_HOST" "cd '$DEST_PATH' && docker compose down && docker compose up -d --build"
   echo "✅ Služby spuštěny / restartovány"
 fi
 
