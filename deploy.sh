@@ -4,19 +4,20 @@ set -euo pipefail
 # --- Zjisti adresář skriptu ---
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-# --- Načti .env ze stejného adresáře jako skript ---
-if [ -f "$SCRIPT_DIR/.env" ]; then
-  # Načteme proměnné z .env do prostředí
-  export $(grep -v '^#' "$SCRIPT_DIR/.env" | xargs)
+# --- Načti .env.ssh ze stejného adresáře jako skript (pouze SSH údaje, lokálně) ---
+if [ -f "$SCRIPT_DIR/.env.ssh" ]; then
+  # Načteme proměnné z .env.ssh do prostředí
+  export $(grep -v '^#' "$SCRIPT_DIR/.env.ssh" | xargs)
 else
-  echo "❌ Soubor .env nebyl nalezen. Vytvoř ho ve stejném adresáři jako skript: $SCRIPT_DIR"
+  echo "❌ Soubor .env.ssh nebyl nalezen. Vytvoř ho ve stejném adresáři jako skript: $SCRIPT_DIR"
+  echo "   Do .env.ssh dej jen SSH_USER / SSH_PASSWORD / SSH_HOST a přidej ho do .gitignore a .dockerignore."
   exit 1
 fi
 
-# --- Kontrola nutných proměnných ---
-: "${SSH_USER:?SSH_USER není nastaven v .env}"
-: "${SSH_PASSWORD:?SSH_PASSWORD není nastaven v .env}"
-: "${SSH_HOST:?SSH_HOST není nastaven v .env}"
+# --- Kontrola nutných proměnných pro SSH ---
+: "${SSH_USER:?SSH_USER není nastaven v .env.ssh}"
+: "${SSH_PASSWORD:?SSH_PASSWORD není nastaven v .env.ssh}"
+: "${SSH_HOST:?SSH_HOST není nastaven v .env.ssh}"
 
 # --- Konfigurace ---
 SRC_DIR="$SCRIPT_DIR"  # přeneseme celý projekt relativně ke skriptu
@@ -35,19 +36,20 @@ if [ ! -d "$SRC_DIR" ]; then
 fi
 
 echo "🚀 Přenáším obsah $SRC_DIR na ${SSH_USER}@${SSH_HOST}:${DEST_PATH}"
-echo "   (vynechávám node_modules a .DS_Store)"
+echo "   (vynechávám node_modules, .DS_Store a .env.ssh)"
 
 sshpass -p "$SSH_PASSWORD" rsync -avz --delete \
   --exclude='.DS_Store' \
   --exclude='node_modules/' \
   --exclude='**/node_modules/' \
+  --exclude='.env.ssh' \
   -e "ssh -o StrictHostKeyChecking=no" \
   "$SRC_DIR"/ \
   "$SSH_USER@$SSH_HOST:$DEST_PATH/"
 
 echo "✅ Hotovo: všechny soubory z $SRC_DIR přeneseny na $DEST_PATH"
 
-# --- Nastavení práv pro .env na serveru ---
+# --- Nastavení práv pro .env na serveru (app config, ne SSH) ---
 if [ -f "$SCRIPT_DIR/.env" ]; then
   echo "🔒 Nastavuji oprávnění pro .env na serveru..."
   sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no "$SSH_USER@$SSH_HOST" "chmod 600 '$DEST_PATH/.env' || true"
