@@ -1,0 +1,4 @@
+services:
+  api-service:
+    ports:
+      - "8001:8001"
